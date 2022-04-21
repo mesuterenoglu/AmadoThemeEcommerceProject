@@ -1,0 +1,29 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Giriş Yap";
+}
+<div class="col-md-6 my-auto">
+    <h1>Giriş Yap</h1>
+    <form asp-action="Login" asp-controller="User" method="post">
+        <div class="row">
+            <div asp-validation-summary="All" class="col-12 mb-3 text-danger">
+
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email" value="" required>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="Password" type="password" class="form-control mb-3" id="password" placeholder="Parola" value="" required>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="custom-control custom-checkbox d-block mb-2">
+                    <input asp-for="RememberMe" type="checkbox" class="custom-control-input" id="customCheckRememberMe">
+                    <label class="custom-control-label" for="customCheckRememberMe">Beni Hatırla</label>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <button type="submit" class="btn amado-btn w-100">Giriş Yap</button>
+            </div>
+        </div>
+</form>
+</div>

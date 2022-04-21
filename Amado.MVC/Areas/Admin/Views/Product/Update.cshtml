@@ -1,0 +1,81 @@
+﻿@model UpdateProductViewModel
+@inject ICategoryService categoryService
+@inject IBrandService brandService
+
+@{
+    ViewData["Title"] = "Admin Ürün Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CategoryDto> categories = categoryService.GetAllActiveAsync().Result;
+    List<BrandDto> brands = brandService.GetAllAsync().Result;
+}
+
+<div class="col-md-6 my-auto">
+    <div class="cart-title mt-50">
+        <h2>Ürün Ekle</h2>
+        <div class="amado-btn-group">
+            <a class="btn amado-btn d-inline" asp-action="Add" asp-controller="Brand">Marka Ekle</a> |
+            <a class="btn amado-btn d-inline" asp-action="Add" asp-controller="Category">Kategori Ekle</a>
+        </div>
+    </div>
+    <form asp-area="Admin" asp-action="Update" asp-controller="Product" method="post">
+        <div class="row">
+            <div asp-validation-summary="All" class="col-12 mb-3 text-danger">
+
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="ProductName" type="text" class="form-control" id="productName" placeholder="Ürün Adı" value="@Model.ProductName" required>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="Price" type="number" class="form-control" id="productPrice" placeholder="Fiyat" value="@Model.Price" required>
+            </div>
+            <div class="col-12 mb-3 form-group row">
+                <label class="col-form-label col-sm-2 w-100" for="categoryId">Kategori</label>
+                <select class="w-100 col-sm-10 float-right" id="categoryId" asp-for="CategoryId">
+                    @if (categories != null)
+                    {
+                        foreach (var category in categories)
+                        {
+                            <option value="@category.Id">@category.CategoryName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-12 mb-3 form-group row">
+                <label class="col-form-label col-sm-2 w-100" for="brandId">Marka</label>
+                <select class="w-100 col-sm-10 float-right" id="brandId" asp-for="BrandId">
+                    @if (brands != null)
+                    {
+                        foreach (var brand in brands)
+                        {
+                            <option value="@brand.Id">@brand.BrandName</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="custom-control custom-checkbox d-block mb-2">
+                    <input asp-for="StockShortage" type="checkbox" class="custom-control-input" id="customCheckforStock">
+                    <label class="custom-control-label" for="customCheckforStock">Yetersiz stok durumu var mı?</label>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="UnitInfo" type="text" class="form-control" id="unitInfo" placeholder="Birim" value="@Model.UnitInfo" required>
+            </div>
+            <div class="col-12 mb-3">
+                <textarea asp-for="Description" class="form-control w-100" id="description" cols="20" rows="5" placeholder="Açıklama">@Model.Description</textarea>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="col-12 mb-3">
+                    <div class="custom-control custom-checkbox d-block mb-2">
+                        <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="customCheckIsActive">
+                        <label class="custom-control-label" for="customCheckIsActive">Ürün Aktif mi?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <button type="submit" class="btn amado-btn w-100">Güncelle</button>
+            </div>
+        </div>
+    </form>
+</div>

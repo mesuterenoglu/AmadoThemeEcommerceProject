@@ -1,0 +1,35 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="col-md-6 my-auto">
+    <h1>Kayıt Ol</h1>
+    <form asp-action="Register" asp-controller="User" method="post">
+        <div class="row">
+            <div asp-validation-summary="All" class="col-12 mb-3 text-danger">
+
+            </div>
+            <div class="col-md-6 mb-3">
+                <input asp-for="FirstName" type="text" class="form-control" id="first_name" value="" placeholder="Ad" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <input asp-for="LastName" type="text" class="form-control" id="last_name" value="" placeholder="Soyad" required>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="Email" type="email" class="form-control" id="email" placeholder="Email" value="" required>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="Password" type="password" class="form-control mb-3" id="password" placeholder="Parola" value="" required>
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="ConfirmPassword" type="password" class="form-control mb-3" id="confirm_password" placeholder="Parola Tekrar" value="" required>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="col-6 mx-auto">
+                    <button type="submit" class="btn amado-btn w-100">Kayıt Ol</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

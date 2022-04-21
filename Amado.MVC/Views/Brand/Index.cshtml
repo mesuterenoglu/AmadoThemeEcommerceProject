@@ -1,0 +1,31 @@
+﻿@model List<BrandDto>
+@{
+    ViewData["Title"] = "Markalar";
+
+}
+
+<!-- Category Area Start -->
+<div class="products-catagories-area clearfix mt-2">
+    <div class="col-sm-12 text-center">
+        <h3>Markalar</h3>
+    </div>
+    <div class="amado-pro-catagory clearfix">
+
+        @foreach (var brand in Model)
+        {
+            <!-- Single Category -->
+            <div class="single-products-catagory clearfix">
+                <a asp-action="Detail" asp-controller="Brand" asp-route-id="@brand.Id">
+                    <img src="@brand.Products[0].ProductImages[0].Url" alt="@brand.Products[0].ProductName _Image">
+                    <!-- Hover Content -->
+                    <div class="hover-content">
+                        <div class="line"></div>
+                        <p>@brand.Products[0].Price.ToString("C2") 'den itibaren</p>
+                        <h4>@brand.BrandName</h4>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- Category Area End -->

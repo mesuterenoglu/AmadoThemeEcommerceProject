@@ -1,0 +1,65 @@
+﻿@model List<ProductImageDto>
+@{
+    ViewData["Title"] = "Admin Aktif Ürünler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+        <div class="row">
+            @if (Model != null && Model.Count > 0)
+            {
+                <div class="col-12 col-lg-8">
+                    <div class="cart-title mt-50">
+                        <div class="text-danger">
+                            @if (ViewBag.Error != null)
+                            {
+                                <p class="text-danger">ViewBag.Error</p>
+                            }
+                        </div>
+                        <h2>@Model[0].Product.ProductName Fotoğrafları</h2>
+                        <div class="amado-btn-group mb-2">
+                            <a class="btn amado-btn" asp-action="AddNewImagebyProductId" asp-route-id="@Model[0].ProductId">Ürüne Yeni Fotoğraf Ekle</a>
+                        </div>
+                    </div>
+
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>URL</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var productImage in Model)
+                                {
+                                    <tr>
+                                        <td class="cart_product_img">
+                                            <img src="@productImage.Url" alt="ProductImage">
+                                        </td>
+                                        <td>
+                                            <span>@productImage.Url</span>
+                                        </td>
+                                        <td></td>
+                                        <td>
+                                            <a class="btn btn-danger" asp-action="RemoveFromDb" asp-route-id="@productImage.Id">Fotoğrafı Sil</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-danger">
+                    Hiç fotoğraf bulunamadı!
+                </div>
+            }
+        </div>
+    </div>
+</div>

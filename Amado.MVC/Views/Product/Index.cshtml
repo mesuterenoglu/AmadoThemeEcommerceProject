@@ -1,0 +1,225 @@
+﻿@model List<ProductDto>
+@inject ICategoryService categoryService
+@inject IBrandService brandService
+@{
+    ViewData["Title"] = "Ürünler";
+    var categories = categoryService.GetAllActiveAsync().Result;
+    var brands = brandService.GetAllActiveAsync().Result;
+}
+<div class="shop_sidebar_area">
+
+    <!-- ##### Single Widget ##### -->
+    <div class="widget catagory mb-50">
+        <!-- Widget Title -->
+        <h6 class="widget-title mb-30">Kategoriler</h6>
+
+        <!--  Catagories  -->
+        <div class="widget-desc">
+            <!-- Single Form Check -->
+            @foreach (var category in categories)
+            {
+                <div class="form-check">
+                    <input class="form-check-input categoryCheck filterInput" type="checkbox" value="@category.Id" id="categorycheck_@category.Id">
+                    <label class="form-check-label" for="categorycheck_@category.Id">@category.CategoryName</label>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <!-- ##### Single Widget ##### -->
+    <div class="widget catagory mb-50">
+        <!-- Widget Title -->
+        <h6 class="widget-title mb-30">Brands</h6>
+
+        <div class="widget-desc">
+            <!-- Single Form Check -->
+            @foreach (var brand in brands)
+            {
+                <div class="form-check">
+                    <input class="form-check-input brandCheck filterInput" type="checkbox" value="@brand.Id" id="brandcheck_@brand.Id">
+                    <label class="form-check-label" for="brandcheck_@brand.Id">@brand.BrandName</label>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="widget catagory mb-50">
+        <button class="btn amado-btn">Filtrele</button>
+    </div>
+</div>
+
+<div class="amado_product_area section-padding-100">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="product-topbar d-xl-flex align-items-end justify-content-between">
+
+                    <!-- Sorting -->
+                    <div class="product-sorting d-flex">
+                        <div class="sort-by-date d-flex align-items-center mr-15">
+                            <p class="float-left">Sırala</p>
+                            <select name="sortSelect" id="sortByPrice" class="filterInput float-right">
+                                <option value="desc">Artan</option>
+                                <option value="asc">Azalan</option>
+                            </select>
+                        </div>
+                        <div class="amado-btn-group">
+                            <button class="btn amado-btn d-inline" id="btnSortbyPrice">Filtrele</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="productRow">
+
+            @foreach (var product in Model)
+            {
+                <!-- Single Product Area -->
+                <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="@product.ProductImages[0].Url" alt="@product.ProductName _Image">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="@product.ProductImages[1].Url" alt="@product.ProductName _Image2">
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description d-flex align-items-center justify-content-between">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price">@product.Price</p>
+                                <h6>@product.ProductName</h6>
+                            </div>
+                            <!-- Ratings & Cart -->
+                            <div class="ratings-cart text-right">
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                                <div class="cart">
+                                    <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Sepete Ekle"><img src="img/core-img/cart.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script src="~/js/jquery/jquery-2.2.4.min.js"></script>
+<script>
+    $(".filterInput").change(function () {
+        let categoryChecks = $(".categoryCheck");
+        let categoryIds = [];
+        let brandIds = [];
+        let sortingOption = $("#sortByPrice").val();
+        for (var i = 0; i < categoryChecks.length; i++) {
+            if (categoryChecks[i].checked) {
+                categoryIds.push(categoryChecks[i].value)
+            }
+        }
+        let brandChecks = $(".brandCheck");
+        for (var i = 0; i < brandChecks.length; i++) {
+            if (brandChecks[i].checked) {
+                brandIds.push(brandChecks[i].value)
+            }
+        }
+        SendPostRequest(categoryIds, brandIds, sortingOption);
+    });
+
+    $("#btnSortbyPrice").click(function () {
+        let categoryChecks = $(".categoryCheck");
+        let categoryIds = [];
+        let brandIds = [];
+        let sortingOption = $("#sortByPrice").val();
+        for (var i = 0; i < categoryChecks.length; i++) {
+            if (categoryChecks[i].checked) {
+                categoryIds.push(categoryChecks[i].value)
+            }
+        }
+        let brandChecks = $(".brandCheck");
+        for (var i = 0; i < brandChecks.length; i++) {
+            if (brandChecks[i].checked) {
+                brandIds.push(brandChecks[i].value)
+            }
+        }
+        SendPostRequest(categoryIds, brandIds, sortingOption);
+
+    });
+
+    const Handle = (list) => {
+        $("#productRow").html("");
+        for (var i = 0; i < list.length; i++) {
+            console.log(list);
+            $("#productRow").prepend(
+                `
+                <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                    <div class="single-product-wrapper">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="${list[i].productImages[0].url}" alt="${list[0].productName}_Image">
+                            <!-- Hover Thumb -->
+                            <img class="hover-img" src="${list[i].productImages[1].url}" alt="${list[i].productName}_Image2">
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product-description d-flex align-items-center justify-content-between">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price">${list[i].price}</p>
+                                <h6>${list[i].productName}</h6>
+                            </div>
+                            <!-- Ratings & Cart -->
+                            <div class="ratings-cart text-right">
+                                <div class="ratings">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </div>
+                                <div class="cart">
+                                    <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Sepete Ekle"><img src="img/core-img/cart.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+            );
+        }
+    };
+
+    const SendPostRequest = (categoryIds, brandIds, sortingOption) => {
+
+        let postData = {
+            Categories: [...categoryIds],
+            Brands: [...brandIds],
+            SortingOption: sortingOption
+        };
+
+        console.log(postData);
+        $.ajax({
+            url: "/Product/GetProductbyFilter",
+            type: "POST",
+            async: false,
+            dataType: "JSON",
+            data: postData,
+            success: function (result) {
+                Handle(result);
+            }
+        })
+    }
+
+</script>

@@ -1,0 +1,28 @@
+﻿@model BrandDto
+@{
+    ViewData["Title"] = "Admin Marka Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-6 my-auto">
+    
+    <h5>Marka Güncelle</h5>
+    <form asp-area="Admin" asp-action="Update" asp-controller="Brand" method="post">
+        <div class="row">
+            <div asp-validation-summary="All" class="col-12 mb-3 text-danger">
+
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="BrandName" type="text" class="form-control" id="brandName" placeholder="Marka Adı" value="@Model.BrandName" required>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="custom-control custom-checkbox d-block mb-2">
+                    <input asp-for="IsActive" type="checkbox" class="custom-control-input" id="customCheckIsActive">
+                    <label class="custom-control-label" for="customCheckIsActive">Marka Aktif mi?</label>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <button type="submit" class="btn amado-btn w-100">Güncelle</button>
+            </div>
+        </div>
+    </form>
+</div>

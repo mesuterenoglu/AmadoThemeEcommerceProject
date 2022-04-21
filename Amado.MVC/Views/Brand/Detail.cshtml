@@ -1,0 +1,34 @@
+﻿@model List<ProductDto>
+@{
+    ViewData["Title"] = "Kategori Detay";
+}
+
+<!-- Products Area Start -->
+<div class="products-catagories-area clearfix mt-2">
+    <div class="col-sm-12 text-center">
+        <h3>Ürünler</h3>
+        <div class="amado-btn-group my-2">
+            <a class="btn amado-btn d-inline" asp-action="Index" asp-controller="Brand">Tüm Markalar</a> |
+            <a class="btn amado-btn d-inline" asp-action="Index" asp-controller="Product">Filtrele</a>
+        </div>
+    </div>
+    <div class="amado-pro-catagory clearfix">
+
+        @foreach (var product in Model)
+        {
+            <!-- Single Product -->
+            <div class="single-products-catagory clearfix">
+                <a asp-action="Detail" asp-controller="Product" asp-route-id="@product.Id">
+                    <img src="@product.ProductImages[0].Url" alt="@product.ProductName _Image">
+                    <!-- Hover Content -->
+                    <div class="hover-content">
+                        <div class="line"></div>
+                        <p>@product.Price.ToString("C2")</p>
+                        <h4>@product.ProductName</h4>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<!-- Products Area End -->

@@ -1,0 +1,93 @@
+﻿@model List<ProductDto>
+@{
+    ViewData["Title"] = "Admin Aktif Ürünler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="cart-title mt-50">
+                    <div class="text-danger">
+                        @if (ViewBag.Error != null)
+                        {
+                            <p class="text-danger">ViewBag.Error</p>
+                        }
+                    </div>
+                    <h2>Aktif Ürünler</h2>
+                    <div class="amado-btn-group mb-2">
+                        <a class="btn amado-btn" asp-action="Add"> Yeni Ürün Ekle</a>
+                        <a class="btn amado-btn" asp-action="GetAllInActive">İnaktif Ürünler</a>
+                    </div>
+                </div>
+                
+                <div class="cart-table clearfix">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Ürün Kodu</th>
+                                <th>Kategori</th>
+                                <th>Marka</th>
+                                <th>Adı</th>
+                                <th>Fiyat</th>
+                                <th>Stok Durumu</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Count > 0)
+                            {
+                                @foreach (var product in Model)
+                                {
+                                    <tr>
+                                        <td class="cart_product_img">
+                                            <a asp-action="Detail" asp-route-id="@product.Id"><img src="@product.ProductImages[0].Url" alt="Product"></a>
+                                        </td>
+                                        <td>
+                                            <span>@product.ProductCode</span>
+                                        </td>
+                                        <td>
+                                            @if (product.Category != null)
+                                            {
+                                                <span>@product.Category.CategoryName</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (product.Brand != null)
+                                            {
+                                                <span>@product.Brand.BrandName</span>
+                                            }
+                                        </td>
+                                        <td class="cart_product_desc">
+                                            <h5>@product.ProductName</h5>
+                                        </td>
+                                        <td class="price">
+                                            <span>@product.Price</span>
+                                        </td>
+                                        <td>
+                                            @if (product.StockShortage)
+                                            {
+                                                <span class="text-danger">Düşük Stok</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-success">Yeterli Stok</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>Hiç aktif ürün bulunamadı!</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

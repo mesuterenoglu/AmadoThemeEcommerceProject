@@ -1,0 +1,24 @@
+﻿@model AddBrandViewModel
+@{
+    ViewData["Title"] = "Admin Yeni Marka Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-6 my-auto">
+    
+    <h5>Marka Ekle</h5>
+    <form asp-area="Admin" asp-action="Add" asp-controller="Brand" method="post">
+        <div class="row">
+            <div asp-validation-summary="All" class="col-12 mb-3 text-danger">
+
+            </div>
+            <div class="col-12 mb-3">
+                <input asp-for="BrandName" type="text" class="form-control" id="brandName" placeholder="Marka Adı" value="" required>
+            </div>
+
+            <div class="col-12 mb-3">
+                <button type="submit" class="btn amado-btn w-100">Ekle</button>
+            </div>
+        </div>
+    </form>
+</div>

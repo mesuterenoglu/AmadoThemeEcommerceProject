@@ -1,0 +1,46 @@
+﻿@model List<ProductDto>
+@inject IUserService userService;
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+@if (userService.IsSignIn(User))
+{
+    <!-- Products Area Start -->
+    <div class="products-catagories-area clearfix mt-2">
+        <div class="col-sm-12 text-center">
+            <h3>Çok Satan Ürünlerimiz</h3>
+        </div>
+        <div class="amado-pro-catagory clearfix">
+
+            @foreach (var product in Model)
+            {
+                <!-- Single Product -->
+                <div class="single-products-catagory clearfix">
+                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@product.Id">
+                        <img src="@product.ProductImages[0].Url" alt="@product.ProductName _Image">
+                        <!-- Hover Content -->
+                        <div class="hover-content">
+                            <div class="line"></div>
+                            <p>@product.Price.ToString("C2")</p>
+                            <h4>@product.ProductName</h4>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <!-- Products Area End -->
+}
+else
+{
+    <div class="my-auto">
+        <p>
+            Sitemizdeki ürünleri görebilmek için lütfen <a class="text-warning" href="/User/Login"><strong>giriş yapınız.</strong></a>
+        </p>
+        <p>
+            Eğer üyeliğiniz bulunmuyorsa, hemen <a class="text-warning" href="/User/Register"><strong>buradan</strong></a> kayıt olabilirsiniz!
+        </p>
+    </div>
+}
+
