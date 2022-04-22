@@ -93,7 +93,7 @@ namespace Amado.MVC.Areas.Admin.Controllers
                 if (count > 4)
                 {
                     ModelState.AddModelError("", Messages.TooMuchImage);
-                    return View();
+                    return View(images);
                 }
                 List<string> validExtensions = new List<string>() {
                 "png", "jpg", "jpeg"
@@ -105,7 +105,7 @@ namespace Amado.MVC.Areas.Admin.Controllers
                     if (!isValid)
                     {
                         ModelState.AddModelError("", Messages.InvalidFileType);
-                        return View(files);
+                        return View(images);
                     }
                 }
 
