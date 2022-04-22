@@ -1,20 +1,20 @@
 ﻿$("#categoryCheckAll").change(function () {
     if ($("#categoryCheckAll").is(":checked")) {
-        let categoryChecks = $(".categoryCheck");
         $(".categoryCheck").each(function (key, value) {
             value.checked = true;
         })
+        GetAndSendValues();
     }
     else {
         $(".categoryCheck").each(function (key, value) {
             value.checked = false;
         })
+        GetAndSendValues();
     }
 })
 
 $("#brandCheckAll").change(function () {
     if ($("#brandCheckAll").is(":checked")) {
-        let categoryChecks = $(".brandCheck");
         $(".brandCheck").each(function (key, value) {
             value.checked = true;
         })

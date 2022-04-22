@@ -184,7 +184,6 @@ namespace Amado.BLL.Services
                     foreach (var image in images)
                     {
                         await _productImageService.RemoveFromDbAsync(image.Id);
-                        _productImageService.DeleteImageFromServer(image.Url);
                     }
                 }
                 await _productRepository.RemoveFromDbAsync(id);

@@ -192,8 +192,8 @@ namespace Amado.BLL.Services
             try
             {
                 var image = await _productImageRepository.GetbyIdAsync(id);
-                await _productImageRepository.RemoveFromDbAsync(id);
                 DeleteImageFromServer(image.Url);
+                await _productImageRepository.RemoveFromDbAsync(id);
                 return Messages.RemovedFromDB;
             }
             catch (Exception ex)

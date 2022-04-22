@@ -91,9 +91,16 @@
                     <div class="single-product-wrapper">
                         <!-- Product Image -->
                         <div class="product-img">
-                            <img src="@product.ProductImages[0].Url" alt="@product.ProductName _Image">
-                            <!-- Hover Thumb -->
-                            <img class="hover-img" src="@product.ProductImages[1].Url" alt="@product.ProductName _Image2">
+
+                            @if (product.ProductImages != null)
+                            {
+                                <img src="@product.ProductImages[0].Url" alt="@product.ProductName _Image">
+                                @if (product.ProductImages.Count>1)
+                                {
+                                    <!-- Hover Thumb -->
+                                    <img class="hover-img" src="@product.ProductImages[1].Url" alt="@product.ProductName _Image2">
+                                }
+                            }
                         </div>
 
                         <!-- Product Description -->
