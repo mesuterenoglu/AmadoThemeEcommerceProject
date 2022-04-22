@@ -11,3 +11,9 @@
     /* ---------------------------------------
     ##### - PLACE YOUR CUSTOM CSS HERE - #####
     --------------------------------------- */
+
+.nice-select > ul.list {
+    max-height: 300px;
+    overflow-y: scroll;
+    width: 100%;
+}
